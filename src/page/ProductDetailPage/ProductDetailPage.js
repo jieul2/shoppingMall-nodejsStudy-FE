@@ -46,7 +46,11 @@ const ProductDetail = () => {
     <Container className="product-detail-card">
       <Row>
         <Col sm={6}>
-          <img src={selectedProduct.image} className="w-100" alt="image" />
+          <img
+            src={selectedProduct.image}
+            className="w-100"
+            alt={selectedProduct.name}
+          />
         </Col>
         <Col className="product-info-area" sm={6}>
           <div className="product-info">{selectedProduct.name}</div>
@@ -81,7 +85,7 @@ const ProductDetail = () => {
                     <Dropdown.Item eventKey={item} disabled={true} key={index}>
                       {item.toUpperCase()}
                     </Dropdown.Item>
-                  )
+                  ),
                 )}
             </Dropdown.Menu>
           </Dropdown>

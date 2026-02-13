@@ -10,7 +10,7 @@ const OrderStatusCard = ({ orderItem }) => {
         <Col xs={2}>
           <img
             src={orderItem.items[0]?.productId?.image}
-            alt={orderItem.items[0]?.productId?.image}
+            alt={orderItem.items[0]?.productId?.name || "상품 이미지"}
             height={96}
           />
         </Col>
