@@ -17,22 +17,29 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    if (loginError) {
-      dispatch(clearErrors());
+    return () => {
+      if (loginError) {
+        dispatch(clearErrors());
+      }
+    };
+  }, [dispatch, loginError]);
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
     }
-  }, [navigate]);
+  }, [user, navigate]);
+
   const handleLoginWithEmail = (event) => {
     event.preventDefault();
     dispatch(loginWithEmail({ email, password }));
   };
 
   const handleGoogleLogin = async (googleData) => {
-    //구글 로그인 하기
+    // 구글 로그인 구현 시 호출
+    // dispatch(loginWithGoogle(googleData.credential));
   };
 
-  if (user) {
-    navigate("/");
-  }
   return (
     <>
       <Container className="login-area">
@@ -66,7 +73,8 @@ const Login = () => {
               Login
             </Button>
             <div>
-              아직 계정이 없으세요?<Link to="/register">회원가입 하기</Link>{" "}
+              아직 계정이 없으세요?
+              <Link to="/register">회원가입 하기</Link>{" "}
             </div>
           </div>
 
