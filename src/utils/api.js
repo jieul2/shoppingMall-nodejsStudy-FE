@@ -5,9 +5,9 @@ const PROD_BACKEND = process.env.REACT_APP_PROD_BACKEND; // 배포용 백엔드 
 const BACKEND_PROXY = process.env.REACT_APP_BACKEND_PROXY; // 프록시 주소
 // console.log("proxy", BACKEND_PROXY);
 const api = axios.create({
-  baseURL: LOCAL_BACKEND,
+  //baseURL: LOCAL_BACKEND,
   //baseURL: PROD_BACKEND,
-  //baseURL: BACKEND_PROXY,
+  baseURL: BACKEND_PROXY,
   headers: {
     "Content-Type": "application/json",
     authorization: `Bearer ${sessionStorage.getItem("token")}`,
