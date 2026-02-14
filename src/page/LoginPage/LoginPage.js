@@ -100,6 +100,7 @@ const Login = () => {
                 />
               </GoogleOAuthProvider>
             </div>
+            <p>Admin 로그인: 1@1.1 / 1</p>
           </div>
         </Form>
       </Container>
