@@ -101,6 +101,11 @@ const userSlice = createSlice({
         state.loading = false;
         state.user = action.payload.user;
         state.loginError = null;
+
+        // 로그인 성공시 Token을 sessionStorage에 저장
+        if (action.payload.token) {
+          sessionStorage.setItem("token", action.payload.token);
+        }
       })
       .addCase(loginWithEmail.rejected, (state, action) => {
         state.loginError = action.payload;

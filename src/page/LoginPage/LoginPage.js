@@ -30,9 +30,19 @@ const Login = () => {
     }
   }, [user, navigate]);
 
-  const handleLoginWithEmail = (event) => {
+  const handleLoginWithEmail = async (event) => {
     event.preventDefault();
-    dispatch(loginWithEmail({ email, password }));
+    try {
+      const response = await dispatch(
+        loginWithEmail({ email, password }),
+      ).unwrap();
+
+      if (response && response.token) {
+        sessionStorage.setItem("token", response.token);
+      }
+    } catch (error) {
+      console.error("로그인 실패:", error);
+    }
   };
 
   const handleGoogleLogin = async (googleData) => {
