@@ -7,9 +7,11 @@ export const getProductList = createAsyncThunk(
   "products/getProductList",
   async (query, { rejectWithValue }) => {
     try {
+      console.log("상품 목록 요청:", query);
       const response = await api.get("/product", { params: { ...query } });
       console.log("상품 목록 응답:", response);
       if (response.status !== 200) throw new Error("상품 목록 가져오기 실패");
+
       return response.data;
     } catch (error) {
       return rejectWithValue(
@@ -52,7 +54,25 @@ export const deleteProduct = createAsyncThunk(
 
 export const editProduct = createAsyncThunk(
   "products/editProduct",
-  async ({ id, ...formData }, { dispatch, rejectWithValue }) => {},
+  async ({ id, ...formData }, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await api.put(`/product/${id}`, formData);
+      if (response.status !== 200) throw new Error("상품 수정 실패");
+
+      dispatch(
+        showToastMessage({
+          message: "상품이 성공적으로 수정되었습니다.",
+          status: "success",
+        }),
+      );
+      dispatch(getProductList({ page: 1 }));
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.error || "상품 수정 중 오류가 발생했습니다.",
+      );
+    }
+  },
 );
 
 // 슬라이스 생성
@@ -82,6 +102,7 @@ const productSlice = createSlice({
     builder
       .addCase(createProduct.pending, (state, action) => {
         state.loading = true;
+        state.success = false;
       })
       .addCase(createProduct.fulfilled, (state, action) => {
         state.loading = false;
@@ -90,11 +111,13 @@ const productSlice = createSlice({
       })
       .addCase(createProduct.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload.productList;
+        state.error = action.payload;
         state.success = false;
       })
       .addCase(getProductList.pending, (state, action) => {
         state.loading = true;
+        state.error = "";
+        state.productList = [];
       })
       .addCase(getProductList.fulfilled, (state, action) => {
         state.loading = false;
@@ -105,6 +128,20 @@ const productSlice = createSlice({
       .addCase(getProductList.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(editProduct.pending, (state, action) => {
+        state.loading = true;
+        state.success = false;
+      })
+      .addCase(editProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = "";
+        state.success = true;
+      })
+      .addCase(editProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.success = false;
       });
   },
 });
