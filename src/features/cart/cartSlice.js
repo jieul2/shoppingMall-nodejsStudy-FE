@@ -50,12 +50,46 @@ export const getCartList = createAsyncThunk(
 
 export const deleteCartItem = createAsyncThunk(
   "cart/deleteCartItem",
-  async (id, { rejectWithValue, dispatch }) => {},
+  async (id, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await api.delete(`/cart/${id}`);
+      if (response.status !== 200) throw new Error("장바구니 아이템 삭제 실패");
+      dispatch(
+        showToastMessage({
+          message: "장바구니 아이템이 삭제되었습니다.",
+          status: "success",
+        }),
+      );
+      dispatch(getCartList());
+      return response.data.cartItemQty;
+    } catch (error) {
+      return rejectWithValue(
+        error.error || "장바구니 아이템 삭제 중 오류가 발생했습니다.",
+      );
+    }
+  },
 );
 
 export const updateQty = createAsyncThunk(
   "cart/updateQty",
-  async ({ id, value }, { rejectWithValue }) => {},
+  async ({ id, value }, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await api.put(`/cart/${id}`, { qty: value });
+      if (response.status !== 200)
+        throw new Error("장바구니 수량 업데이트 실패");
+      dispatch(
+        showToastMessage({
+          message: "장바구니 수량이 업데이트되었습니다.",
+          status: "success",
+        }),
+      );
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.error || "장바구니 수량 업데이트 중 오류가 발생했습니다.",
+      );
+    }
+  },
 );
 
 export const getCartQty = createAsyncThunk(
@@ -127,6 +161,36 @@ const cartSlice = createSlice({
         state.loading = false;
         state.error =
           action.payload || "장바구니 수량을 불러오는 중 오류가 발생했습니다.";
+      })
+      .addCase(updateQty.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateQty.fulfilled, (state, action) => {
+        state.loading = false;
+        state.cartList = action.payload;
+        state.totalPrice = action.payload.reduce(
+          (total, item) => total + item.productId.price * item.qty,
+          0,
+        );
+      })
+      .addCase(updateQty.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.payload ||
+          "장바구니 수량을 업데이트하는 중 오류가 발생했습니다.";
+      })
+      .addCase(deleteCartItem.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteCartItem.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = "";
+        state.cartItemCount = action.payload;
+      })
+      .addCase(deleteCartItem.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.payload || "장바구니 아이템 삭제 중 오류가 발생했습니다.";
       });
   },
 });
