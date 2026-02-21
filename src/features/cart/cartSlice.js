@@ -14,27 +14,63 @@ const initialState = {
 // Async thunk actions
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
-  async ({ id, size }, { rejectWithValue, dispatch }) => {}
+  async ({ id, size }, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await api.post("/cart", { productId: id, size, qty: 1 });
+      if (response.status !== 200) throw new Error("장바구니 추가 실패");
+      dispatch(
+        showToastMessage({
+          message: "상품이 장바구니에 추가되었습니다.",
+          status: "success",
+        }),
+      );
+      return response.data.cartItemQty;
+    } catch (error) {
+      return rejectWithValue(
+        error.error || "상품을 장바구니에 추가하는 중 오류가 발생했습니다.",
+      );
+    }
+  },
 );
 
 export const getCartList = createAsyncThunk(
   "cart/getCartList",
-  async (_, { rejectWithValue, dispatch }) => {}
+  async (_, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await api.get("/cart");
+      if (response.status !== 200) throw new Error("장바구니 조회 실패");
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.error || "장바구니 조회 중 오류가 발생했습니다.",
+      );
+    }
+  },
 );
 
 export const deleteCartItem = createAsyncThunk(
   "cart/deleteCartItem",
-  async (id, { rejectWithValue, dispatch }) => {}
+  async (id, { rejectWithValue, dispatch }) => {},
 );
 
 export const updateQty = createAsyncThunk(
   "cart/updateQty",
-  async ({ id, value }, { rejectWithValue }) => {}
+  async ({ id, value }, { rejectWithValue }) => {},
 );
 
 export const getCartQty = createAsyncThunk(
   "cart/getCartQty",
-  async (_, { rejectWithValue, dispatch }) => {}
+  async (_, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await api.get("/cart/qty");
+      if (response.status !== 200) throw new Error("장바구니 수량 조회 실패");
+      return response.data.cartItemQty;
+    } catch (error) {
+      return rejectWithValue(
+        error.error || "장바구니 수량 조회 중 오류가 발생했습니다.",
+      );
+    }
+  },
 );
 
 const cartSlice = createSlice({
@@ -46,7 +82,53 @@ const cartSlice = createSlice({
     },
     // You can still add reducers here for non-async actions if necessary
   },
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(addToCart.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addToCart.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = "";
+        state.cartItemCount = action.payload;
+      })
+      .addCase(addToCart.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.payload ||
+          "장바구니에 상품을 추가하는 중 오류가 발생했습니다.";
+      })
+      .addCase(getCartList.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getCartList.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = "";
+        state.cartList = action.payload;
+        state.totalPrice = action.payload.reduce(
+          (total, item) => total + item.productId.price * item.qty,
+          0,
+        );
+      })
+      .addCase(getCartList.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.payload || "장바구니를 불러오는 중 오류가 발생했습니다.";
+      })
+      .addCase(getCartQty.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getCartQty.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = "";
+        state.cartItemCount = action.payload;
+      })
+      .addCase(getCartQty.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.payload || "장바구니 수량을 불러오는 중 오류가 발생했습니다.";
+      });
+  },
 });
 
 export default cartSlice.reducer;
