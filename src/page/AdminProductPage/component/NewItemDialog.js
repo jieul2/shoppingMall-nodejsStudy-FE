@@ -256,6 +256,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
                     type="number"
                     placeholder="재고 수량"
                     value={item[1] || ""}
+                    min="0"
                     required
                   />
                 </Col>
