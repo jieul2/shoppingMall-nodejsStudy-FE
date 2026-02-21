@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ORDER_STATUS } from "../../../constants/order.constants";
 import { currencyFormat } from "../../../utils/number";
 import { updateOrder } from "../../../features/order/orderSlice";
+import { getOrderList } from "../../../features/order/orderSlice";
 
 const OrderDetailDialog = ({ open, handleClose }) => {
   const selectedOrder = useSelector((state) => state.order.selectedOrder);
@@ -13,8 +14,16 @@ const OrderDetailDialog = ({ open, handleClose }) => {
   const handleStatusChange = (event) => {
     setOrderStatus(event.target.value);
   };
-  const submitStatus = () => {
-    dispatch(updateOrder({ id: selectedOrder._id, status: orderStatus }));
+  const submitStatus = async (event) => {
+    event.preventDefault(); // 폼 제출 시 페이지 새로고침 방지
+
+    const result = await dispatch(
+      updateOrder({ id: selectedOrder._id, status: orderStatus }),
+    );
+
+    if (updateOrder.fulfilled.match(result)) {
+      dispatch(getOrderList({ page: 1, ordernum: "" }));
+    }
     handleClose();
   };
 
