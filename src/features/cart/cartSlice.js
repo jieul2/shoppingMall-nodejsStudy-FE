@@ -26,6 +26,13 @@ export const addToCart = createAsyncThunk(
       );
       return response.data.cartItemQty;
     } catch (error) {
+      dispatch(
+        showToastMessage({
+          message:
+            error.error || "장바구니에 상품을 추가하는 중 오류가 발생했습니다.",
+          status: "error",
+        }),
+      );
       return rejectWithValue(
         error.error || "상품을 장바구니에 추가하는 중 오류가 발생했습니다.",
       );
