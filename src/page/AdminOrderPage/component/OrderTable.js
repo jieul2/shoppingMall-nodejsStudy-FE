@@ -9,42 +9,51 @@ const OrderTable = ({ header, data, openEditForm }) => {
       <Table striped bordered hover>
         <thead>
           <tr>
-            {header.map((title) => (
-              <th>{title}</th>
+            {header.map((title, index) => (
+              <th key={`header-${index}`}>{title}</th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {data.length > 0 ? (
+          {data && data.length > 0 ? (
             data.map((item, index) => (
-              <tr onClick={() => openEditForm(item)}>
-                <th>{index}</th>
-                <th>{item.orderNum}</th>
-                <th>{item.createdAt.slice(0, 10)}</th>
-                <th>{item.userId.email}</th>
-                {item.items.length > 0 ? (
-                  <th>
-                    {item.items[0].productId.name}
-                    {item.items.length > 1 && `외 ${item.items.length - 1}개`}
-                  </th>
+              <tr key={item._id || index} onClick={() => openEditForm(item)}>
+                <td>{index}</td>
+                <td>{item.orderNum}</td>
+                <td>{item.createdAt ? item.createdAt.slice(0, 10) : ""}</td>
+                <td>{item.userId?.email}</td>
+                {item.items && item.items.length > 0 ? (
+                  <td>
+                    {item.items[0]?.productId?.name}
+                    {item.items.length > 1 && ` 외 ${item.items.length - 1}개`}
+                  </td>
                 ) : (
-                  <th></th>
+                  <td></td>
                 )}
-
-                <th>{item.shipTo.address + " " + item.shipTo.city}</th>
-
-                <th>{currencyFormat(item.totalPrice)}</th>
-                <th>
-                  <Badge bg={badgeBg[item.status]}>{item.status}</Badge>
-                </th>
+                <td>
+                  {item.shipTo
+                    ? `${item.shipTo.address} ${item.shipTo.city}`
+                    : ""}
+                </td>
+                <td>{currencyFormat(item.totalPrice)}</td>
+                <td>
+                  <Badge bg={badgeBg[item.status] || "primary"}>
+                    {item.status}
+                  </Badge>
+                </td>
               </tr>
             ))
           ) : (
-            <tr>No Data to show</tr>
+            <tr>
+              <td colSpan={header.length} className="text-center">
+                No Data to show
+              </td>
+            </tr>
           )}
         </tbody>
       </Table>
     </div>
   );
 };
+
 export default OrderTable;
