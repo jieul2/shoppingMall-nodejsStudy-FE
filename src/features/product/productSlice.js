@@ -23,7 +23,18 @@ export const getProductList = createAsyncThunk(
 
 export const getProductDetail = createAsyncThunk(
   "products/getProductDetail",
-  async (id, { rejectWithValue }) => {},
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await api.get(`/product/${id}`);
+      if (response.status !== 200)
+        throw new Error("상품 상세 정보 가져오기 실패");
+      return response.data.product;
+    } catch (error) {
+      return rejectWithValue(
+        error.error || "상품 상세 정보를 가져오는 중 오류가 발생했습니다.",
+      );
+    }
+  },
 );
 
 export const createProduct = createAsyncThunk(
@@ -49,7 +60,24 @@ export const createProduct = createAsyncThunk(
 
 export const deleteProduct = createAsyncThunk(
   "products/deleteProduct",
-  async (id, { dispatch, rejectWithValue }) => {},
+  async (id, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await api.delete(`/product/${id}`);
+      if (response.status !== 200) throw new Error("상품 삭제 실패");
+      dispatch(
+        showToastMessage({
+          message: "상품이 성공적으로 삭제되었습니다.",
+          status: "success",
+        }),
+      );
+      dispatch(getProductList({ page: 1 }));
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.error || "상품 삭제 중 오류가 발생했습니다.",
+      );
+    }
+  },
 );
 
 export const editProduct = createAsyncThunk(
@@ -142,6 +170,18 @@ const productSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
         state.success = false;
+      })
+      .addCase(getProductDetail.pending, (state, action) => {
+        state.loading = true;
+        state.error = "";
+      })
+      .addCase(getProductDetail.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedProduct = action.payload;
+      })
+      .addCase(getProductDetail.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
