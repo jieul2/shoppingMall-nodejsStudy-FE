@@ -34,6 +34,7 @@ body {
   margin: 0;
   color: #000;
   cursor: pointer;
+  text-align: center;
 }
 
 /* 검색창 (데스크탑) */
@@ -194,3 +195,27 @@ body {
     height: 100% !important;
   }
 }
+
+/* 드롭다운 화살표 제거 및 커서 설정 */
+.custom-dropdown-toggle::after {
+  display: none !important;
+}
+
+.custom-dropdown-toggle {
+  cursor: pointer;
+  display: inline-block;
+}
+
+/* 드롭다운 메뉴 스타일 조정 (선택 사항) */
+.dropdown-menu {
+  font-size: 14px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: none;
+  margin-top: 10px !important;
+}
+
+.dropdown-item:active {
+  background-color: #000;
+}
+

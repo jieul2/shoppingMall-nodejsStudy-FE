@@ -1,50 +1,209 @@
-.payment-title{
-    margin-top:30px;
-    margin-bottom:20px;
+.payment-title {
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
-.rccs{
-    margin:0 !important;
-}
-
-
-.form-area input{
-    margin-bottom: 10px;
-}
-.pay-button{
-    margin-top: 30px;
+.rccs {
+  margin: 0 !important;
 }
 
-.confirmation-page{
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: white;
-    padding-top:20px;
-    padding-bottom: 40px;
-    width: 90%;
+.form-area input {
+  margin-bottom: 10px;
+}
+.pay-button {
+  margin-top: 30px;
 }
 
-.check-image{
-    padding:20px;
+.confirmation-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  width: 90%;
 }
-.mobile-receipt-area{
-    display:none;
+
+.check-image {
+  padding: 20px;
+}
+.mobile-receipt-area {
+  display: none;
 }
 
 @media screen and (max-width: 63rem) {
-    .form-area{
-        margin-top: 20px;
-    }
+  .form-area {
+    margin-top: 20px;
+  }
 
-    .receipt-area{
-        display: none;
-    }
-    .mobile-receipt-area{
-        display:block;
-    }
+  .receipt-area {
+    display: none;
+  }
+  .mobile-receipt-area {
+    display: block;
+  }
 
-    /* .pay-button{
+  /* .pay-button{
         position: absolute;
         bottom: 0;
     } */
+}
+
+/* 영수증 컨테이너 */
+.receipt-container {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 25px;
+  border: 1px solid #f1f1f1;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.receipt-title {
+  font-weight: 800;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  letter-spacing: -0.5px;
+}
+
+/* 리스트 스타일 */
+.receipt-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.receipt-item {
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+.item-name {
+  max-width: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-price {
+  font-weight: 500;
+}
+
+/* 합계 영역 */
+.total-row {
+  padding: 10px 0;
+}
+
+.total-label {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.total-amount {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #000;
+}
+
+/* 결제 버튼 */
+.payment-button {
+  height: 55px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.payment-button:hover {
+  background-color: #222;
+  transform: translateY(-1px);
+}
+
+/* 하단 안내 문구 */
+.receipt-footer {
+  padding-top: 15px;
+  border-top: 1px dashed #eee;
+}
+
+.footer-text {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.policy-info {
+  font-size: 0.75rem;
+  color: #aaa;
+  line-height: 1.5;
+}
+.payment-page-container {
+  margin-top: 50px;
+}
+
+/* 카드 및 섹션 스타일 */
+.payment-card {
+  border: 1px solid #f1f1f1;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+}
+
+.section-title {
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: #222;
+}
+
+/* 커스텀 입력창 스타일 */
+.custom-input {
+  border-radius: 12px;
+  border: 1px solid #eee;
+  padding: 12px 15px;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.custom-input:focus {
+  border-color: #000;
+  box-shadow: none;
+  background-color: #fafafa;
+}
+
+/* 버튼 스타일 */
+.payment-final-btn {
+  height: 60px;
+  border-radius: 15px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  background-color: #000;
+  transition: transform 0.2s;
+}
+
+.payment-final-btn:hover {
+  background-color: #222;
+  transform: translateY(-2px);
+}
+
+.payment-final-btn:active {
+  transform: scale(0.98);
+}
+
+/* 영수증 스티키 효과 (데스크탑) */
+.sticky-receipt {
+  position: sticky;
+  top: 100px;
+}
+
+/* 모바일/데스크탑 노출 제어 */
+@media (max-width: 991px) {
+  .receipt-desktop-area {
+    display: none;
+  }
+  .mobile-receipt-area {
+    display: block;
+  }
+}
+
+@media (min-width: 992px) {
+  .mobile-receipt-area {
+    display: none;
+  }
 }

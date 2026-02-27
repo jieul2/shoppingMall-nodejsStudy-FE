@@ -14,9 +14,9 @@ const initialState = {
 // Async thunk actions
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
-  async ({ id, size }, { rejectWithValue, dispatch }) => {
+  async ({ id, size, qty }, { rejectWithValue, dispatch }) => {
     try {
-      const response = await api.post("/cart", { productId: id, size, qty: 1 });
+      const response = await api.post("/cart", { productId: id, size, qty });
       dispatch(
         showToastMessage({
           message: "상품이 장바구니에 추가되었습니다.",

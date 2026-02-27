@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import CartProductCard from "./component/CartProductCard";
@@ -12,27 +11,31 @@ const CartPage = () => {
   const { cartList, totalPrice } = useSelector((state) => state.cart);
 
   useEffect(() => {
-    //카트리스트 불러오기
     dispatch(getCartList());
-  }, []);
+  }, [dispatch]);
 
   return (
-    <Container>
-      <Row>
-        <Col xs={12} md={7}>
+    <Container className="cart-page-container">
+      <h2 className="cart-title mb-4">쇼핑백</h2>
+      <Row className="g-4">
+        <Col xs={12} lg={8}>
           {cartList.length > 0 ? (
-            cartList.map((item) => (
-              <CartProductCard item={item} key={item._id} />
-            ))
+            <div className="cart-list-wrapper">
+              {cartList.map((item) => (
+                <CartProductCard item={item} key={item._id} />
+              ))}
+            </div>
           ) : (
-            <div className="text-align-center empty-bag">
-              <h2>카트가 비어있습니다.</h2>
-              <div>상품을 담아주세요!</div>
+            <div className="empty-cart-box">
+              <h3 className="mb-3">카트가 비어있습니다.</h3>
+              <p className="text-muted">마음에 드는 상품을 담아보세요!</p>
             </div>
           )}
         </Col>
-        <Col xs={12} md={5}>
-          <OrderReceipt cartList={cartList} totalPrice={totalPrice} />
+        <Col xs={12} lg={4}>
+          <div className="receipt-sticky">
+            <OrderReceipt cartList={cartList} totalPrice={totalPrice} />
+          </div>
         </Col>
       </Row>
     </Container>

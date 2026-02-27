@@ -9,14 +9,12 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/user/userSlice";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Dropdown } from "react-bootstrap";
 
 const Navbar = ({ user }) => {
   const dispatch = useDispatch();
   const { cartItemCount } = useSelector((state) => state.cart);
   const navigate = useNavigate();
-
-  const menuList = ["여성", "남성", "아동", "H&M HOME", "Sale"];
 
   const onCheckEnter = (event) => {
     if (event.key === "Enter") {
@@ -25,17 +23,15 @@ const Navbar = ({ user }) => {
     }
   };
 
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <nav className="modern-nav-container">
-      {/* 관리자 배너 */}
-      {user && user.level === "admin" && (
-        <div className="admin-top-bar">
-          <Link to="/admin/product?page=1">Admin Dashboard</Link>
-        </div>
-      )}
+      {/* 관리자 배너 (기존 유지) */}
 
       <Container>
-        {/* 상단 섹션: 로고와 유저 아이콘 */}
         <Row className="align-items-center py-3">
           <Col xs={4} md={4} className="d-flex align-items-center">
             <div className="search-box-wrapper hide-on-mobile">
@@ -61,30 +57,47 @@ const Navbar = ({ user }) => {
             className="d-flex justify-content-end align-items-center"
           >
             <div className="nav-icons-group">
-              {user ? (
-                <div
-                  onClick={() => dispatch(logout())}
-                  className="icon-item"
-                  title="로그아웃"
+              {/* 유저 메뉴 드롭다운 */}
+              <Dropdown align="end">
+                <Dropdown.Toggle
+                  as="div"
+                  className="icon-item custom-dropdown-toggle"
                 >
                   <FontAwesomeIcon icon={faUser} />
-                </div>
-              ) : (
-                <div
-                  onClick={() => navigate("/login")}
-                  className="icon-item"
-                  title="로그인"
-                >
-                  <FontAwesomeIcon icon={faUser} />
-                </div>
-              )}
-              <div
-                onClick={() => navigate("/account/purchase")}
-                className="icon-item"
-                title="주문내역"
-              >
-                <FontAwesomeIcon icon={faBox} />
-              </div>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  {user ? (
+                    <>
+                      <Dropdown.Header>
+                        {user.name}님 환영합니다
+                      </Dropdown.Header>
+                      <Dropdown.Item
+                        onClick={() => navigate("/account/purchase")}
+                      >
+                        마이페이지 (주문내역)
+                      </Dropdown.Item>
+                      {user.level === "admin" && (
+                        <Dropdown.Item
+                          onClick={() => navigate("/admin/product?page=1")}
+                        >
+                          어드민 페이지
+                        </Dropdown.Item>
+                      )}
+                      <Dropdown.Divider />
+                      <Dropdown.Item onClick={handleLogout}>
+                        로그아웃
+                      </Dropdown.Item>
+                    </>
+                  ) : (
+                    <Dropdown.Item onClick={() => navigate("/login")}>
+                      로그인 / 회원가입
+                    </Dropdown.Item>
+                  )}
+                </Dropdown.Menu>
+              </Dropdown>
+
+              {/* 쇼핑백 (기존 유지) */}
               <div
                 onClick={() => navigate("/cart")}
                 className="icon-item cart-badge-wrapper"
@@ -99,16 +112,7 @@ const Navbar = ({ user }) => {
           </Col>
         </Row>
 
-        {/* 하단 섹션: 메뉴 리스트 및 모바일 전용 검색창 */}
         <div className="nav-bottom-area">
-          <ul className="nav-menu-list">
-            {menuList.map((menu, index) => (
-              <li key={index} className="menu-item">
-                <a href="#">{menu}</a>
-              </li>
-            ))}
-          </ul>
-
           <div className="mobile-search-bar show-only-mobile">
             <FontAwesomeIcon icon={faSearch} />
             <input

@@ -17,7 +17,7 @@ const Sidebar = () => {
   const NavbarContent = () => {
     return (
       <div className="sidebar-content-wrapper">
-        <div className="sidebar-item admin-title">Admin Account</div>
+        <div className="sidebar-item admin-title">Admin Page</div>
         <ul className="sidebar-area">
           <li
             className="sidebar-item"
@@ -40,8 +40,8 @@ const Sidebar = () => {
     <>
       {/* 데스크탑 사이드바 */}
       <div className="sidebar-toggle hide-on-mobile">
-        <Link to="/">
-          <img width={100} src="/image/hm-logo.png" alt="hm-logo.png" />
+        <Link to="/" className="nav-logo-link">
+          <h1 className="brand-logo">SHOP</h1>
         </Link>
         {NavbarContent()}
       </div>
@@ -53,8 +53,10 @@ const Sidebar = () => {
         className="mobile-sidebar-toggle show-only-mobile"
       >
         <Container fluid>
-          <Link to="/">
-            <img width={80} src="/image/hm-logo.png" alt="hm-logo.png" />
+          <Link to="/" className="nav-logo-link">
+            <h1 className="brand-logo" style={{ fontSize: "22px" }}>
+              SHOP
+            </h1>
           </Link>
           <Navbar.Toggle
             aria-controls={`offcanvasNavbar-expand`}
@@ -63,15 +65,15 @@ const Sidebar = () => {
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand`}
             aria-labelledby={`offcanvasNavbarLabel-expand`}
-            placement="top" // 여기서 'top'으로 설정하면 위에서 아래로 내려옵니다.
+            placement="top"
             className="mobile-offcanvas-menu"
             show={show}
             onHide={handleClose}
           >
             <Offcanvas.Header closeButton>
               <Offcanvas.Title id={`offcanvasNavbarLabel-expand`}>
-                <Link to="/" onClick={handleClose}>
-                  <img width={100} src="/image/hm-logo.png" alt="hm-logo.png" />
+                <Link to="/" className="nav-logo-link" onClick={handleClose}>
+                  <h1 className="brand-logo">SHOP</h1>
                 </Link>
               </Offcanvas.Title>
             </Offcanvas.Header>

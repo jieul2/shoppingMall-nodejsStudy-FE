@@ -10,43 +10,47 @@ const OrderReceipt = ({ cartList, totalPrice }) => {
 
   return (
     <div className="receipt-container">
-      <h3 className="receipt-title">주문 내역</h3>
-      <ul className="receipt-list">
-        {cartList.length > 0 &&
-          cartList.map((item, index) => (
-            <li key={index}>
-              <div className="display-flex space-between">
-                <div>{item.productId.name}</div>
+      <h3 className="receipt-title">주문 요약</h3>
+      <div className="receipt-content">
+        <ul className="receipt-list">
+          {cartList.length > 0 &&
+            cartList.map((item, index) => (
+              <li key={index} className="receipt-item">
+                <div className="d-flex justify-content-between">
+                  <span className="item-name text-muted">
+                    {item.productId.name} x {item.qty}
+                  </span>
+                  <span className="item-price">
+                    ₩ {currencyFormat(item.productId.price * item.qty)}
+                  </span>
+                </div>
+              </li>
+            ))}
+        </ul>
 
-                <div>₩ {currencyFormat(item.productId.price * item.qty)}</div>
-              </div>
-            </li>
-          ))}
-      </ul>
-      <div className="display-flex space-between receipt-title">
-        <div>
-          <strong>Total:</strong>
+        <div className="d-flex justify-content-between align-items-center total-row">
+          <span className="total-label">총 결제 금액</span>
+          <span className="total-amount">₩ {currencyFormat(totalPrice)}</span>
         </div>
-        <div>
-          <strong>₩ {currencyFormat(totalPrice)}</strong>
-        </div>
-      </div>
-      {location.pathname.includes("/cart") && cartList.length > 0 && (
-        <Button
-          variant="dark"
-          className="payment-button"
-          onClick={() => navigate("/payment")}
-        >
-          결제 계속하기
-        </Button>
-      )}
 
-      <div>
-        가능한 결제 수단 귀하가 결제 단계에 도달할 때까지 가격 및 배송료는
-        확인되지 않습니다.
-        <div>
-          30일의 반품 가능 기간, 반품 수수료 및 미수취시 발생하는 추가 배송 요금
-          읽어보기 반품 및 환불
+        {location.pathname.includes("/cart") && cartList.length > 0 && (
+          <Button
+            variant="dark"
+            className="w-100 payment-button mt-4"
+            onClick={() => navigate("/payment")}
+          >
+            결제하기
+          </Button>
+        )}
+
+        <div className="receipt-footer mt-4">
+          <p className="footer-text">
+            * 결제 단계에서 배송료 및 할인 코드를 적용할 수 있습니다.
+          </p>
+          <div className="policy-info">
+            주문 시 <strong>반품 및 환불 정책</strong>에 동의하는 것으로
+            간주됩니다. 30일 이내 무료 반품이 가능합니다.
+          </div>
         </div>
       </div>
     </div>

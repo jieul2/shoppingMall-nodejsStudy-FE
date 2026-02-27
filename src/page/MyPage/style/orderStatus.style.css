@@ -45,3 +45,120 @@
     margin-left: 20px;
   }
 }
+
+.status-card-container {
+  max-width: 900px;
+  margin-top: 40px;
+}
+
+.mypage-header h2 {
+  font-size: 2rem;
+  letter-spacing: -1px;
+}
+
+.edit-profile-btn {
+  border-radius: 20px;
+  padding: 8px 25px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.edit-profile-btn:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.info-label {
+  margin-bottom: 4px;
+}
+
+.shadow-sm {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+.no-order-box {
+  background-color: #f9f9f9;
+}
+
+/* 카드 전체 스타일 - 동글동글하게 */
+.status-card {
+  background-color: white;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* 부드러운 그림자 */
+  margin-bottom: 20px;
+  border-radius: 15px; /* 카드를 둥글게 */
+  border: 1px solid #f1f1f1;
+  transition: transform 0.2s ease;
+}
+
+.status-card:hover {
+  background-color: #fafafa;
+  transform: translateY(-2px);
+}
+
+/* 이미지 스타일 - 텍스트 침범 방지 */
+.order-img {
+  width: 100%;
+  max-width: 100px;
+  height: 100px;
+  object-fit: cover; /* 이미지가 찌그러지지 않고 꽉 차게 */
+  border-radius: 12px; /* 이미지도 동글동글하게 */
+}
+
+/* 주문 정보 영역 */
+.order-info {
+  padding-left: 20px;
+}
+
+.order-num-text {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.product-name {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 5px 0;
+}
+
+.total-price {
+  font-weight: bold;
+  color: #333;
+}
+
+/* 주문 상태 배지 영역 */
+.status-badge-area {
+  text-align: center;
+}
+
+.status-badge {
+  padding: 8px 12px;
+  border-radius: 20px; /* 배지도 둥글게 */
+  font-weight: 500;
+}
+
+/* 반응형 처리 */
+@media screen and (max-width: 768px) {
+  .order-info {
+    padding-left: 10px;
+  }
+  .status-badge-area {
+    margin-top: 10px;
+    text-align: left;
+    padding-left: 10px;
+  }
+  .order-img {
+    height: 80px;
+    width: 80px;
+  }
+}
+
+.status-card-container {
+  margin-bottom: 20px;
+  max-width: 900px; /* 마이페이지 전체 폭 조정 */
+}
+
+.text-12 {
+  font-size: 12px;
+  color: #888;
+}

@@ -1,44 +1,115 @@
-.product-card-cart{
-    margin-bottom: 10px;
+.product-card-cart {
+  margin-bottom: 10px;
 }
-.qty-dropdown{
-    max-width:400px;
+.qty-dropdown {
+  max-width: 400px;
 }
-.trash-button{
-    background-color: white;
-    border: 1px solid gray;
+.trash-button {
+  background-color: white;
+  border: 1px solid gray;
 }
-.product-card-cart{
-    background-color: ghostwhite;
-    padding:10px;
+.product-card-cart {
+  background-color: ghostwhite;
+  padding: 10px;
 }
-.receipt-container{
-    border: 1px solid gray;
-    padding: 32px 24px;
+.receipt-container {
+  border: 1px solid gray;
+  padding: 32px 24px;
 }
-.receipt-list{
-    list-style-type: none;
-    padding: 0;
-    border-bottom: 1px solid black;
-}
-
-.receipt-list li{
-    padding-bottom: 10px;
+.receipt-list {
+  list-style-type: none;
+  padding: 0;
+  border-bottom: 1px solid black;
 }
 
-.receipt-title{
-    margin-bottom: 20px;
+.receipt-list li {
+  padding-bottom: 10px;
 }
 
-.payment-button{
-   width: 100%;
-   padding: 16px;
-   margin-bottom: 20px;
+.receipt-title {
+  margin-bottom: 20px;
 }
-.text-align-center{
-    text-align: center;
+
+.payment-button {
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 20px;
 }
-.empty-bag{
-    background-color: white;
-    padding: 20px;
+.text-align-center {
+  text-align: center;
+}
+.empty-bag {
+  background-color: white;
+  padding: 20px;
+}
+
+.cart-page-container {
+  margin-top: 50px;
+  margin-bottom: 100px;
+}
+
+.cart-title {
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+/* 카드 디자인 */
+.cart-product-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #f1f1f1;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+/* 이미지 겹침 방지 핵심 설정 */
+.cart-img-container {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.cart-product-img {
+  width: 100%;
+  max-width: 120px; /* 이미지 최대 폭 제한 */
+  height: 120px;
+  object-fit: cover; /* 이미지가 찌그러지지 않게 */
+  border-radius: 15px;
+}
+
+.cart-info-container {
+  padding-left: 20px;
+}
+
+.product-name {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.product-option {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.product-price {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+/* 오른쪽 영수증 고정 */
+.receipt-sticky {
+  position: sticky;
+  top: 100px;
+}
+
+/* 빈 카트 상자 */
+.empty-cart-box {
+  background: #f8f8f8;
+  border-radius: 20px;
+  padding: 80px 20px;
+  text-align: center;
+  border: 2px dashed #eee;
 }
