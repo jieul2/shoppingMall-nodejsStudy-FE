@@ -2,11 +2,13 @@ import React, { useEffect } from "react";
 import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import OrderStatusCard from "./component/OrderStatusCard";
+import { useNavigate } from "react-router-dom";
 import "./style/orderStatus.style.css";
 import { getOrder } from "../../features/order/orderSlice";
 
 const MyPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { orderList } = useSelector((state) => state.order);
   const { user } = useSelector((state) => state.user); // 사용자 정보 가져오기
 
@@ -26,13 +28,18 @@ const MyPage = () => {
             </p>
           </Col>
           <Col md={4} className="text-md-end mt-3 mt-md-0">
-            {/* 회원정보 수정 버튼 */}
+            {/* 회원정보 수정 버튼 (기존) */}
+            <Button variant="outline-dark" className="me-2 rounded-pill px-4">
+              정보 수정
+            </Button>
+
+            {/* 배송지 관리 버튼 (새로 추가) */}
             <Button
-              variant="outline-dark"
-              className="edit-profile-btn"
-              onClick={() => console.log("회원정보 수정 페이지로 이동")}
+              variant="dark"
+              className="rounded-pill px-4"
+              onClick={() => navigate("/address")} // AppRouter에 설정할 경로
             >
-              회원정보 수정
+              배송지 관리
             </Button>
           </Col>
         </Row>
