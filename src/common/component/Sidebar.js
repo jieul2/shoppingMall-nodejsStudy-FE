@@ -11,50 +11,70 @@ const Sidebar = () => {
     navigate(url);
   };
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const NavbarContent = () => {
     return (
-      <div>
-        <Link to="/">
-          <img width={100} src="/image/hm-logo.png" alt="hm-logo.png" />
-        </Link>
-        <div className="sidebar-item">Admin Account</div>
+      <div className="sidebar-content-wrapper">
+        <div className="sidebar-item admin-title">Admin Account</div>
         <ul className="sidebar-area">
           <li
             className="sidebar-item"
             onClick={() => handleSelectMenu("/admin/product?page=1")}
           >
-            product
+            Product Management
           </li>
           <li
             className="sidebar-item"
             onClick={() => handleSelectMenu("/admin/order?page=1")}
           >
-            order
+            Order Management
           </li>
         </ul>
       </div>
     );
   };
+
   return (
     <>
-      <div className="sidebar-toggle">{NavbarContent()}</div>
+      {/* 데스크탑 사이드바 */}
+      <div className="sidebar-toggle hide-on-mobile">
+        <Link to="/">
+          <img width={100} src="/image/hm-logo.png" alt="hm-logo.png" />
+        </Link>
+        {NavbarContent()}
+      </div>
 
-      <Navbar bg="light" expand={false} className="mobile-sidebar-toggle">
+      {/* 모바일 상단 바 */}
+      <Navbar
+        bg="light"
+        expand={false}
+        className="mobile-sidebar-toggle show-only-mobile"
+      >
         <Container fluid>
-          <img width={80} src="/image/hm-logo.png" alt="hm-logo.png" />
-          <Navbar.Brand href="#"></Navbar.Brand>
+          <Link to="/">
+            <img width={80} src="/image/hm-logo.png" alt="hm-logo.png" />
+          </Link>
           <Navbar.Toggle
             aria-controls={`offcanvasNavbar-expand`}
-            onClick={() => setShow(true)}
+            onClick={handleShow}
           />
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand`}
             aria-labelledby={`offcanvasNavbarLabel-expand`}
-            placement="start"
-            className="sidebar"
+            placement="top" // 여기서 'top'으로 설정하면 위에서 아래로 내려옵니다.
+            className="mobile-offcanvas-menu"
             show={show}
+            onHide={handleClose}
           >
-            <Offcanvas.Header closeButton></Offcanvas.Header>
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title id={`offcanvasNavbarLabel-expand`}>
+                <Link to="/" onClick={handleClose}>
+                  <img width={100} src="/image/hm-logo.png" alt="hm-logo.png" />
+                </Link>
+              </Offcanvas.Title>
+            </Offcanvas.Header>
             <Offcanvas.Body>{NavbarContent()}</Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>
