@@ -18,7 +18,7 @@ const LandingPage = () => {
         name,
       }),
     );
-  }, [query]);
+  }, [dispatch, name, query]);
 
   return (
     <Container>

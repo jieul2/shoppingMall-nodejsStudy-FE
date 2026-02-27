@@ -36,7 +36,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
 
   useEffect(() => {
     if (success) setShowDialog(false);
-  }, [success]);
+  }, [setShowDialog, success]);
 
   useEffect(() => {
     if (error || !success) {
@@ -56,7 +56,7 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
         setStock([]);
       }
     }
-  }, [showDialog]);
+  }, [dispatch, error, mode, selectedProduct, showDialog, success]);
 
   const handleClose = () => {
     //모든걸 초기화시키고;

@@ -1,11 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import {
-  faBox,
-  faSearch,
-  faShoppingBag,
-} from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/user/userSlice";
