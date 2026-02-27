@@ -19,7 +19,6 @@ export const createOrder = createAsyncThunk(
   async (payload, { dispatch, rejectWithValue }) => {
     try {
       const response = await api.post("/order", payload);
-      if (response.status !== 200) throw new Error(response.data.error);
       dispatch(getCartQty());
       console.log("오다 넘버", response.data.orderNum);
       return response.data.orderNum;
@@ -42,7 +41,6 @@ export const getOrder = createAsyncThunk(
   async (_, { rejectWithValue, dispatch }) => {
     try {
       const response = await api.get("/order/me");
-      if (response.status !== 200) throw new Error(response.data.error);
       return response.data.orderList;
     } catch (error) {
       const errorMessage =
@@ -69,7 +67,6 @@ export const getOrderList = createAsyncThunk(
       const response = await api.get("/order", { params: query });
       console.log("주문 목록 응답", response);
 
-      if (response.status !== 200) throw new Error(response.data.error);
       return {
         orderList: response.data.orderList,
         totalPageNum: response.data.totalPageNum,
@@ -95,7 +92,7 @@ export const updateOrder = createAsyncThunk(
   async ({ id, status }, { dispatch, rejectWithValue }) => {
     try {
       const response = await api.put(`/order/${id}`, { status });
-      if (response.status !== 200) throw new Error(response.data.error);
+
       dispatch(
         showToastMessage({
           message: "주문 상태가 성공적으로 업데이트되었습니다.",

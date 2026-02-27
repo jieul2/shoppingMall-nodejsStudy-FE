@@ -47,7 +47,7 @@ const Login = () => {
 
   const handleGoogleLogin = async (googleData) => {
     // 구글 로그인 구현 시 호출
-    // dispatch(loginWithGoogle(googleData.credential));
+    dispatch(loginWithGoogle(googleData.credential));
   };
 
   return (
