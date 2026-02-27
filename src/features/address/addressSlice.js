@@ -8,7 +8,6 @@ export const getAddressList = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await api.get("/address");
-      console.log("배송지 목록 응답:", response);
       return response.data.addresses;
     } catch (error) {
       return rejectWithValue(error.error);

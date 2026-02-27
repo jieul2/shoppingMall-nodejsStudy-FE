@@ -33,9 +33,7 @@ const AddressPage = () => {
     dispatch(getAddressList());
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log("현재 배송지 목록:", addressList);
-  }, [addressList]);
+  useEffect(() => {}, [addressList]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -66,8 +64,6 @@ const AddressPage = () => {
     if (mode === "new") {
       dispatch(addAddress(newAddress));
     } else {
-      console.log("업데이트할 배송지 ID:", selectedAddress.addressList[0]._id);
-      console.log("업데이트할 배송지 데이터:", newAddress);
       dispatch(
         updateAddress({
           id: selectedAddress.addressList[0]._id,
@@ -135,7 +131,9 @@ const AddressPage = () => {
               addressList={addressList}
               onEdit={handleOpenEdit}
               onDelete={handleDelete}
-              onSetDefault={(id) => console.log("기본 설정", id)}
+              onSetDefault={(id) =>
+                dispatch(updateAddress({ id, formData: { isDefault: true } }))
+              }
             />
           )}
         </Card.Body>

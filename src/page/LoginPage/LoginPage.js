@@ -92,12 +92,7 @@ const Login = () => {
             <p>-외부 계정으로 로그인하기-</p>
             <div className="display-center">
               <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-                <GoogleLogin
-                  onSuccess={handleGoogleLogin}
-                  onError={() => {
-                    console.log("Login Failed");
-                  }}
-                />
+                <GoogleLogin onSuccess={handleGoogleLogin} onError={() => {}} />
               </GoogleOAuthProvider>
             </div>
             <p>Admin 로그인: admin@admin.com / admin</p>

@@ -20,7 +20,6 @@ export const createOrder = createAsyncThunk(
     try {
       const response = await api.post("/order", payload);
       dispatch(getCartQty());
-      console.log("오다 넘버", response.data.orderNum);
       return response.data.orderNum;
     } catch (error) {
       const errorMessage =
@@ -63,9 +62,7 @@ export const getOrderList = createAsyncThunk(
   "order/getOrderList",
   async (query, { rejectWithValue, dispatch }) => {
     try {
-      console.log("주문 목록 요청", query);
       const response = await api.get("/order", { params: query });
-      console.log("주문 목록 응답", response);
 
       return {
         orderList: response.data.orderList,

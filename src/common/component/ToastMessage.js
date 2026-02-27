@@ -6,7 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 const ToastMessage = () => {
   const { toastMessage } = useSelector((state) => state.ui);
-  console.log("ToastMessage 컴포넌트 렌더링:", toastMessage);
   useEffect(() => {
     if (toastMessage) {
       const { message, status } = toastMessage;
