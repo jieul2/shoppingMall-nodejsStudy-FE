@@ -56,6 +56,8 @@ const AdminProductPage = () => {
     //아이템 삭제하가ㅣ
     if (window.confirm("정말 이 상품을 삭제하시겠습니까?")) {
       dispatch(deleteProduct(id));
+      setSearchQuery({ ...searchQuery, page: 1 }); // 삭제 후 첫 페이지로 이동
+      navigate(`?page=1`);
     }
   };
 
